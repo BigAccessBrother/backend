@@ -9,7 +9,7 @@ services:
       - static-files:/static-files
       - media-files:/media-files
       - ./nginx:/etc/nginx/conf.d
-      - "/etc/letsencrypt:/etc/letsencrypt:ro"
+      - "/root/letsencrypt:/root/letsencrypt"
     #command: /bin/bash -c "nginx -g 'daemon off;'"
 
   postgres:
