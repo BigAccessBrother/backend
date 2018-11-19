@@ -1,0 +1,34 @@
+version: '3'
+services:
+  nginx:
+    image: nginx:1.15.0
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./config:/etc/nginx/conf.d
+      - static-files:/static-files
+      - media-files:/media-files
+
+  postgres:
+    image: postgres:latest
+    env_file:
+      - prod.env
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+  app:
+    image: registry.gitlab.propulsion-home.ch/full-stack/batch-2018-09/personal-projects/bab/backend:latest
+    command: 'sh /scripts/run.sh'
+    env_file:
+      - prod.env
+    depends_on:
+      - postgres
+    volumes:
+      - static-files:/static-files
+      - media-files:/media-files
+
+volumes:
+  postgres:
+  media-files:
+  static-files:
