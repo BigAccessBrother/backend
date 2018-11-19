@@ -6,7 +6,7 @@ services:
     ports:
       - "8000:80"
     volumes:
-      - ./config:/etc/nginx/conf.d
+      - ./nginx:/etc/nginx/conf.d
       - ./front-end:/front-end
 
   postgres:
