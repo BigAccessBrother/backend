@@ -27,7 +27,8 @@ SECRET_KEY = 't8x9j$5f&u%5(9v8we^fugy+j)5xg$j!_x@#uiovx=3^wmgut#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['app']
+ALLOWED_HOSTS = ['app',
+                 'accessbrother.propulsion - learn.ch']
 
 
 # Application definition
