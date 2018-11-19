@@ -1,7 +1,7 @@
 version: '3'
 services:
   nginx:
-    image: nginx:1.15.0
+    image: nginx:latest
     ports:
       - "80:80"
       - "443:443"
@@ -10,7 +10,7 @@ services:
       - media-files:/media-files
       - ./nginx:/etc/nginx/conf.d
       - "/etc/letsencrypt:/etc/letsencrypt:ro"
-    command: /bin/bash -c "nginx -g 'daemon off;'"
+    #command: /bin/bash -c "nginx -g 'daemon off;'"
 
   postgres:
     image: postgres:latest
