@@ -28,7 +28,8 @@ SECRET_KEY = 't8x9j$5f&u%5(9v8we^fugy+j)5xg$j!_x@#uiovx=3^wmgut#'
 DEBUG = True
 
 ALLOWED_HOSTS = ['app',
-                 'accessbrother.propulsion-learn.ch']
+                 'accessbrother.propulsion-learn.ch',
+                 'localhost']
 
 
 # Application definition
