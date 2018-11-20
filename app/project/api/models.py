@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.db import models
-from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -103,7 +102,7 @@ class Alert(models.Model):
         to='api.AgentResponse',
         on_delete=models.CASCADE,
     )
-    to = models.EmailField(  #should it be email field?
+    to = models.EmailField(  # should it be email field?
         verbose_name='alert_to',
         max_length=35,
     )
