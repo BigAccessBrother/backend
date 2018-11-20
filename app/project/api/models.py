@@ -5,26 +5,45 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
-class Client(models.Model):
+class UserProfile(models.Model):
+    user = models.OneToOneField(
+        verbose_name='user',
+        to=settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='user_profile',
+    )
+    is_admin = models.BooleanField(
+        verbose_name='is_admin',
+        blank=False,
+        null=False
+    )
+
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
+
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def save_user_profile(sender, instance, **kwargs):
+    instance.user_profile.save()
+
+
+class Agent(models.Model):
     user = models.ForeignKey(
         verbose_name='user',
         to=settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name='clients',
+        related_name='user',
     )
     name = models.CharField(
         verbose_name='name',
         max_length=25,
     )
     mac_address = models.CharField(
-        verbose_name='name',
+        verbose_name='mac_address',
         max_length=64,
-    )
-    agent_responses = models.ForeignKey(
-        verbose_name='agent_responses',
-        to='api.ClientResponse',
-        on_delete=models.CASCADE,
-        related_name='agent_responses',  # what is related name here?
     )
     last_response_received = models.DateTimeField(
         verbose_name='last_response_received',
@@ -34,18 +53,24 @@ class Client(models.Model):
         verbose_name='secure',
         blank=False,
     )
-    alerts = models.ForeignKey(
-        verbose_name='alerts',
-        to='api.Alert',
-        on_delete=models.CASCADE,
-    )
     date_created = models.DateTimeField(
         verbose_name='date_created',
         auto_now_add=True,
     )
+    system_serial_number = models.CharField(
+        verbose_name='system_serial_number',
+        max_length=25,
+    )
+    is_active = models.BooleanField(
+        verbose_name='is_active',
+        blank=False,
+    )
+
+    def __str__(self):
+        return f"user: {self.user} | secure: {self.secure} | {self.system_serial_number}"
 
 
-class ClientInstaller(models.Model):
+class AgentInstaller(models.Model):
     os_type = models.CharField(
         verbose_name='os_type',
         max_length=25,
@@ -66,7 +91,7 @@ class ClientInstaller(models.Model):
 class Alert(models.Model):
     target_machine = models.ForeignKey(
         verbose_name='target_machine',
-        to='api.Client',
+        to='api.agent',
         on_delete=models.CASCADE,
     )
     date_created = models.DateTimeField(
@@ -75,7 +100,7 @@ class Alert(models.Model):
     )
     agent_responses = models.ForeignKey(
         verbose_name='agent_responses',
-        to='api.ClientResponse',
+        to='api.AgentResponse',
         on_delete=models.CASCADE,
     )
     to = models.EmailField(  #should it be email field?
@@ -180,23 +205,16 @@ class SecurityStandard(models.Model):
         verbose_name='protection_status',
         max_length=25,
     )
-    list_of_startup_apps = models.TextField(  # ???
-        verbose_name='list_of_startup_apps',
-    )
-    list_of_installed_apps = models.TextField(  # ???
-        verbose_name='list_of_installed_apps',
-    )
 
 
-class ClientResponse(models.Model):
+class AgentResponse(models.Model):
+
+    class Meta:
+        ordering = ['-date_created']
+
     date_created = models.DateTimeField(
         verbose_name='date_created',
         auto_now_add=True,
-    )
-    system_serial_number = models.ForeignKey(
-        verbose_name='system_serial_number',
-        to='api.Client',
-        on_delete=models.CASCADE,
     )
     alerts = models.ForeignKey(
         verbose_name='alerts',
@@ -227,8 +245,8 @@ class ClientResponse(models.Model):
         verbose_name='system_manufacturer',
         max_length=25,
     )
-    system_mode = models.CharField(
-        verbose_name='system_mode',
+    system_model = models.CharField(
+        verbose_name='system_model',
         max_length=25,
     )
     system_type = models.CharField(
@@ -291,10 +309,59 @@ class ClientResponse(models.Model):
         verbose_name='protection_status',
         max_length=25,
     )
-    list_of_startup_apps = models.TextField(  # ???
-        verbose_name='list_of_startup_apps',
+    installed_apps = models.ForeignKey(
+        verbose_name='installed_apps',
+        to='api.InstalledApps',
+        on_delete=models.CASCADE,
     )
-    list_of_installed_apps = models.TextField(  # ???
-        verbose_name='list_of_installed_apps',
+    startup_apps = models.ForeignKey(
+        verbose_name='startup_apps',
+        to='api.StartupApps',
+        on_delete=models.CASCADE,
     )
 
+
+class StartupApps(models.Model):
+    name = models.CharField(
+        verbose_name='app_name',
+        max_length=25,
+        null=True,
+    )
+    command = models.CharField(
+        verbose_name='command',
+        max_length=50,
+        null=True,
+    )
+    location = models.CharField(
+        verbose_name='location',
+        max_length=50,
+        null=True,
+    )
+    user = models.CharField(
+        verbose_name='app_user',
+        max_length=50,
+        null=True,
+    )
+
+
+class InstalledApps(models.Model):
+    name = models.CharField(
+        verbose_name='app_name',
+        max_length=50,
+        null=True,
+    )
+    vendor = models.CharField(
+        verbose_name='vendor',
+        max_length=50,
+        null=True,
+    )
+    version = models.CharField(
+        verbose_name='version',
+        max_length=25,
+        null=True,
+    )
+    install_date = models.CharField(
+        verbose_name='install_date',
+        max_length=25,
+        null=True,
+    )
