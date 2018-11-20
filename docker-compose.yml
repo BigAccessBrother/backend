@@ -1,13 +1,13 @@
 version: '3'
 services:
 
-  nginx:
-    image: nginx:1.15.0
-    ports:
-      - "8000:80"
-    volumes:
-      - ./nginx:/etc/nginx/conf.d
-      - ./front-end:/front-end
+#  nginx:
+#    image: nginx:latest
+#    ports:
+#      - "8000:80"
+#    volumes:
+#      - ./nginx:/etc/nginx/conf.d
+#      - ./front-end:/front-end
 
   postgres:
     image: postgres:latest
@@ -25,6 +25,7 @@ services:
     command: '/usr/sbin/sshd -D'
     ports:
       - "4777:22"
+      - "9000:8000"
     volumes:
       - ./app:/app
 
