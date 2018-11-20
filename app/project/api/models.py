@@ -24,7 +24,7 @@ class Client(models.Model):
         verbose_name='agent_responses',
         to='api.ClientResponse',
         on_delete=models.CASCADE,
-        related_name='',  # what is related name here?
+        related_name='agent_responses',  # what is related name here?
     )
     last_response_received = models.DateTimeField(
         verbose_name='last_response_received',
@@ -54,9 +54,8 @@ class ClientInstaller(models.Model):
         verbose_name='version',
         max_length=25,
     )
-    file = models.CharField(
+    file = models.TextField(
         verbose_name='file',
-
     )
     date_created = models.DateTimeField(
         verbose_name='date_created',
