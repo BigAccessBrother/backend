@@ -17,10 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from project.api.home.views import HomeView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('api/authentication/', include('project.api.authentication.urls')),
-    path('api/client/', include('project.api.client.urls')),
+    path('api/agent/', include('project.api.agent.urls')),
     path('api/response/', include('project.api.response.urls')),
-    # path('accounts/', include('django.contrib.auth.urls')),
+    path('api/home/', HomeView, name='home'),
+    path('api/auth/', include('project.api.authentication.urls')),
+    path('api/standards/', include('project.api.standards.urls')),
+    #path('accounts/', include('django.contrib.auth.urls')),
 ]
