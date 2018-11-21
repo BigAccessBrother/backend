@@ -40,10 +40,12 @@ class Agent(models.Model):
         verbose_name='name',
         max_length=25,
     )
+
     mac_address = models.CharField(
         verbose_name='mac_address',
         max_length=64,
     )
+
     last_response_received = models.DateTimeField(
         verbose_name='last_response_received',
         auto_now_add=True,
@@ -66,7 +68,7 @@ class Agent(models.Model):
     )
 
     def __str__(self):
-        return f"user: {self.user} | secure: {self.secure} | {self.system_serial_number}"
+        return f"agent-id: {self.id} | user: {self.user} | secure: {self.secure} | {self.system_serial_number}"
 
 
 class AgentInstaller(models.Model):
@@ -117,6 +119,180 @@ class Alert(models.Model):
         verbose_name='alert_sent',
         blank=False,
     )
+
+
+class AgentResponse(models.Model):
+
+    class Meta:
+        ordering = ['-date_created']
+
+    date_created = models.DateTimeField(
+        verbose_name='date_created',
+        auto_now_add=True,
+    )
+
+    computer_name = models.CharField(
+        verbose_name='computer_name',
+        max_length=25,
+    )
+
+    agent = models.ForeignKey(
+        verbose_name='agent',
+        to='Agent',
+        related_name='agent',
+        on_delete=models.CASCADE,
+
+    )
+
+    agent_version = models.CharField(
+        verbose_name='agent_version',
+        max_length=25,
+    )
+    ip_address = models.CharField(
+        verbose_name='ip_address',
+        max_length=25,
+    )
+    os_type = models.CharField(  # should contain an array?
+        verbose_name='os_type',
+        max_length=50,
+    )
+    os_version = models.CharField(
+        verbose_name='os_version',
+        max_length=30,
+    )
+    system_manufacturer = models.CharField(
+        verbose_name='system_manufacturer',
+        max_length=25,
+    )
+    system_model = models.CharField(
+        verbose_name='system_model',
+        max_length=25,
+    )
+    system_type = models.CharField(
+        verbose_name='system_type',
+        max_length=25,
+    )
+    bios_version = models.CharField(
+        verbose_name='bios_version',
+        max_length=25,
+    )
+    antispyware_enabled = models.BooleanField(
+        verbose_name='antispyware_enabled',
+        blank=False,
+    )
+    antispyware_signature_last_updated = models.DateTimeField(
+        verbose_name='antispyware_signature_last_updated',
+        auto_now_add=True,
+    )
+    antivirus_enabled = models.BooleanField(
+        verbose_name='antivirus_enabled',
+        blank=False,
+    )
+    antivirus_signature_last_updated = models.DateTimeField(
+        verbose_name='antivirus_signature_last_updated',
+        auto_now_add=True,
+    )
+    behavior_monitor_enabled = models.BooleanField(
+        verbose_name='behavior_monitor_enabled',
+        blank=False,
+    )
+    full_scan_age = models.CharField(
+        verbose_name='full_scan_age',
+        max_length=50,
+    )
+    quick_scan_age = models.CharField(
+        verbose_name='quick_scan_age',
+        max_length=50,
+    )
+    nis_enabled = models.BooleanField(
+        verbose_name='nis_enabled',
+        blank=False,
+    )
+    nis_signature_last_updated = models.DateTimeField(
+        verbose_name='nis_signature_last_updated',
+        auto_now_add=True,
+    )
+    nis_signature_version = models.CharField(
+        verbose_name='nis_signature_version',
+        max_length=50,
+    )
+    on_access_protection_enabled = models.BooleanField(
+        verbose_name='on_access_protection_enabled',
+        blank=False,
+    )
+    real_time_protection_enabled = models.BooleanField(
+        verbose_name='real_time_protection_enabled',
+        blank=False,
+    )
+    protection_status = models.CharField(  # does it have to be a string?
+        verbose_name='protection_status',
+        max_length=25,
+    )
+    installed_apps = models.ForeignKey(
+        verbose_name='installed_apps',
+        to='api.InstalledApps',
+        on_delete=models.CASCADE,
+    )
+    startup_apps = models.ForeignKey(
+        verbose_name='startup_apps',
+        to='api.StartupApps',
+        on_delete=models.CASCADE,
+    )
+
+    def __str__(self):
+        return f"{self.date_created} | {self.computer_name} | ip: {self.ip_address}"
+
+
+class StartupApps(models.Model):
+    name = models.CharField(
+        verbose_name='app_name',
+        max_length=25,
+        null=True,
+    )
+    command = models.CharField(
+        verbose_name='command',
+        max_length=50,
+        null=True,
+    )
+    location = models.CharField(
+        verbose_name='location',
+        max_length=50,
+        null=True,
+    )
+    user = models.CharField(
+        verbose_name='app_user',
+        max_length=50,
+        null=True,
+    )
+
+    def __str__(self):
+        return f"{self.name} | command: {self.command}"
+
+
+class InstalledApps(models.Model):
+    name = models.CharField(
+        verbose_name='app_name',
+        max_length=50,
+        null=True,
+    )
+    vendor = models.CharField(
+        verbose_name='vendor',
+        max_length=50,
+        null=True,
+    )
+    version = models.CharField(
+        verbose_name='version',
+        max_length=25,
+        null=True,
+    )
+    install_date = models.CharField(
+        verbose_name='install_date',
+        max_length=25,
+        null=True,
+    )
+
+    def __str__(self):
+        return f"{self.name} | install_date: {self.install_date}"
 
 
 class SecurityStandard(models.Model):
@@ -203,164 +379,4 @@ class SecurityStandard(models.Model):
     protection_status = models.CharField(  # does it have to be a string?
         verbose_name='protection_status',
         max_length=25,
-    )
-
-
-class AgentResponse(models.Model):
-
-    class Meta:
-        ordering = ['-date_created']
-
-    date_created = models.DateTimeField(
-        verbose_name='date_created',
-        auto_now_add=True,
-    )
-    alerts = models.ForeignKey(
-        verbose_name='alerts',
-        to='api.Alert',
-        on_delete=models.CASCADE,
-    )
-    computer_name = models.CharField(
-        verbose_name='computer_name',
-        max_length=25,
-    )
-    client_version = models.CharField(
-        verbose_name='client_version',
-        max_length=25,
-    )
-    ip_address = models.CharField(
-        verbose_name='ip_address',
-        max_length=25,
-    )
-    os_type = models.CharField(  # should contain an array?
-        verbose_name='os_type',
-        max_length=50,
-    )
-    os_version = models.CharField(
-        verbose_name='os_version',
-        max_length=30,
-    )
-    system_manufacturer = models.CharField(
-        verbose_name='system_manufacturer',
-        max_length=25,
-    )
-    system_model = models.CharField(
-        verbose_name='system_model',
-        max_length=25,
-    )
-    system_type = models.CharField(
-        verbose_name='system_type',
-        max_length=25,
-    )
-    bios_version = models.CharField(
-        verbose_name='system_type',
-        max_length=25,
-    )
-    antispyware_enabled = models.BooleanField(
-        verbose_name='antispyware_enabled',
-        blank=False,
-    )
-    antispyware_signature_last_updated = models.DateTimeField(
-        verbose_name='antispyware_signature_last_updated',
-        auto_now_add=True,
-    )
-    antivirus_enabled = models.BooleanField(
-        verbose_name='antivirus_enabled',
-        blank=False,
-    )
-    antivirus_signature_last_updated = models.DateTimeField(
-        verbose_name='antivirus_signature_last_updated',
-        auto_now_add=True,
-    )
-    behavior_monitor_enabled = models.BooleanField(
-        verbose_name='behavior_monitor_enabled',
-        blank=False,
-    )
-    full_scan_age = models.TextField(
-        verbose_name='full_scan_age',
-        max_length=50,
-    )
-    quick_scan_age = models.TextField(
-        verbose_name='quick_scan_age',
-        max_length=50,
-    )
-    nis_enabled = models.BooleanField(
-        verbose_name='nis_enabled',
-        blank=False,
-    )
-    nis_signature_last_updated = models.DateTimeField(
-        verbose_name='nis_signature_last_updated',
-        auto_now_add=True,
-    )
-    nis_signature_version = models.CharField(
-        verbose_name='nis_signature_version',
-        max_length=50,
-    )
-    on_access_protection_enabled = models.BooleanField(
-        verbose_name='on_access_protection_enabled',
-        blank=False,
-    )
-    real_time_protection_enabled = models.BooleanField(
-        verbose_name='real_time_protection_enabled',
-        blank=False,
-    )
-    protection_status = models.CharField(  # does it have to be a string?
-        verbose_name='protection_status',
-        max_length=25,
-    )
-    installed_apps = models.ForeignKey(
-        verbose_name='installed_apps',
-        to='api.InstalledApps',
-        on_delete=models.CASCADE,
-    )
-    startup_apps = models.ForeignKey(
-        verbose_name='startup_apps',
-        to='api.StartupApps',
-        on_delete=models.CASCADE,
-    )
-
-
-class StartupApps(models.Model):
-    name = models.CharField(
-        verbose_name='app_name',
-        max_length=25,
-        null=True,
-    )
-    command = models.CharField(
-        verbose_name='command',
-        max_length=50,
-        null=True,
-    )
-    location = models.CharField(
-        verbose_name='location',
-        max_length=50,
-        null=True,
-    )
-    user = models.CharField(
-        verbose_name='app_user',
-        max_length=50,
-        null=True,
-    )
-
-
-class InstalledApps(models.Model):
-    name = models.CharField(
-        verbose_name='app_name',
-        max_length=50,
-        null=True,
-    )
-    vendor = models.CharField(
-        verbose_name='vendor',
-        max_length=50,
-        null=True,
-    )
-    version = models.CharField(
-        verbose_name='version',
-        max_length=25,
-        null=True,
-    )
-    install_date = models.CharField(
-        verbose_name='install_date',
-        max_length=25,
-        null=True,
     )
