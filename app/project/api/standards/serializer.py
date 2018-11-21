@@ -13,3 +13,8 @@ class StandardSerializer(serializers.ModelSerializer):
                   'nis_signature_last_updated', 'nis_signature_version', 'on_access_protection_enabled',
                   'real_time_protection_enabled', 'protection_status']
         read_only_fields = ['id']
+
+    def create(self, validated_data):
+        return SecurityStandard.objects.create(
+             **validated_data,
+        )

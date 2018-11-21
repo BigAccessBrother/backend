@@ -36,16 +36,10 @@ class Agent(models.Model):
         on_delete=models.CASCADE,
         related_name='user',
     )
-    name = models.CharField(
+    computer_name = models.CharField(
         verbose_name='name',
         max_length=25,
     )
-
-    mac_address = models.CharField(
-        verbose_name='mac_address',
-        max_length=64,
-    )
-
     last_response_received = models.DateTimeField(
         verbose_name='last_response_received',
         auto_now_add=True,
@@ -130,20 +124,12 @@ class AgentResponse(models.Model):
         verbose_name='date_created',
         auto_now_add=True,
     )
-
-    computer_name = models.CharField(
-        verbose_name='computer_name',
-        max_length=25,
-    )
-
     agent = models.ForeignKey(
         verbose_name='agent',
         to='Agent',
         related_name='agent',
         on_delete=models.CASCADE,
-
     )
-
     agent_version = models.CharField(
         verbose_name='agent_version',
         max_length=25,
@@ -326,7 +312,7 @@ class SecurityStandard(models.Model):
     )
     bios_version = models.CharField(
         verbose_name='system_type',
-        max_length=25,
+        max_length=50,
     )
     antispyware_enabled = models.BooleanField(
         verbose_name='antispyware_enabled',
@@ -380,3 +366,6 @@ class SecurityStandard(models.Model):
         verbose_name='protection_status',
         max_length=25,
     )
+
+    def __str__(self):
+        return f"security standards id: {self.id} | date created: {self.date_created}"
