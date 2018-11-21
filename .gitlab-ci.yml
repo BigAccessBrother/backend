@@ -8,7 +8,7 @@ stages:
 - deploy
 
 before_script:
-- docker login -u "gitlab-ci-token" -p "$CI_BUILD_TOKEN" "$CI_REGISTRY"
+- docker authentication -u "gitlab-ci-token" -p "$CI_BUILD_TOKEN" "$CI_REGISTRY"
 
 pull:
   stage: pull
