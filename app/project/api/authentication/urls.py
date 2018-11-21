@@ -5,8 +5,8 @@ from project.api.authentication.views import AuthView
 
 urlpatterns = [
     path('', AuthView, name='authentication'),
-    path('token/', TokenObtainPairView.as_view(), name='token-obtain-pair'),  # get a new GWT
-    path('token/refresh/', TokenRefreshView.as_view(), name='token-refresh'),  # get a new GWT with refresh Token
+    path('token/', TokenObtainPairView.as_view(), name='token-obtain-pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token-refresh'),
     path('token/verify/', TokenVerifyView.as_view(), name='token-verify'),
 
 ]
