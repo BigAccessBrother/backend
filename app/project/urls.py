@@ -21,7 +21,7 @@ from project.api.home.views import HomeView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/agent/', include('project.api.client.urls')),
+    path('api/agent/', include('project.api.agent.urls')),
     path('api/response/', include('project.api.response.urls')),
     path('api/home/', HomeView, name='home'),
     path('api/auth/', include('project.api.authentication.urls')),
