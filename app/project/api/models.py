@@ -11,11 +11,11 @@ class UserProfile(models.Model):
         on_delete=models.CASCADE,
         related_name='user_profile',
     )
-    is_admin = models.BooleanField(
-        verbose_name='is_admin',
-        blank=False,
-        null=False
-    )
+    # is_admin = models.BooleanField(
+    #     verbose_name='is_admin',
+    #     blank=False,
+    #     null=False,
+    # )
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
@@ -140,7 +140,7 @@ class SecurityStandard(models.Model):
         verbose_name='system_manufacturer',
         max_length=25,
     )
-    system_mode = models.CharField(
+    system_model = models.CharField(
         verbose_name='system_mode',
         max_length=25,
     )
