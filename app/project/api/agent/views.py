@@ -1,4 +1,3 @@
-from django.http import HttpResponse
 from rest_framework.generics import ListAPIView
 
 from project.api.agent.serializer import AgentSerializer

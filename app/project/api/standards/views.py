@@ -1,4 +1,4 @@
-from rest_framework.generics import ListAPIView, GenericAPIView
+from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from project.api.models import SecurityStandard
 from project.api.standards.serializer import StandardSerializer
