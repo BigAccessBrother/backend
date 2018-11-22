@@ -31,8 +31,7 @@ def save_user_profile(sender, instance, **kwargs):
 
 class Agent(models.Model):
 
-    #owner = models.ForeignKey('auth.User', related_name='auth_user', on_delete=models.CASCADE,)
-
+    # owner = models.ForeignKey('auth.User', related_name='auth_user', on_delete=models.CASCADE,)
 
     user = models.ForeignKey(
         verbose_name='user',
@@ -219,7 +218,6 @@ class AgentResponse(models.Model):
         max_length=50,
     )
 
-
     def __str__(self):
         return f"{self.date_created} | {self.computer_name} | ip: {self.ip_address}"
 
@@ -250,7 +248,6 @@ class StartupApps(models.Model):
         to='api.AgentResponse',
         on_delete=models.CASCADE,
     )
-
 
     def __str__(self):
         return f"{self.name} | command: {self.command}"
