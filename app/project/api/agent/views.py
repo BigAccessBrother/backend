@@ -1,3 +1,5 @@
+from django.contrib.auth.models import User
+from rest_framework.exceptions import NotFound
 from rest_framework.generics import ListAPIView, DestroyAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -19,8 +21,18 @@ class AgentDeleteView(DestroyAPIView):
 class AgentRegisterView(APIView):
 
     def post(self, request, **kwargs):
+        try:
+            user = User.objects.get(username=request.data['username'])
+        except User.DoesNotExist:
+            raise NotFound('User does not exist')
+        try:
+            user.check_password(request.data['password'])
+        except Exception:
+            raise NotFound(f'Password wrong')
+
         agent = Agent.objects.create(
-            user__username=request.data['username'],
-            user__password=request.data['password']
+            user=user,
+            system_serial_number=request.data['system_serial_number'],
+            computer_name=f'{user.username} {user.agents.count()+1}',
         )
         return Response(AgentSerializer(agent).data)
