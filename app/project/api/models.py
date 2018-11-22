@@ -30,6 +30,10 @@ def save_user_profile(sender, instance, **kwargs):
 
 
 class Agent(models.Model):
+
+    #owner = models.ForeignKey('auth.User', related_name='auth_user', on_delete=models.CASCADE,)
+
+
     user = models.ForeignKey(
         verbose_name='user',
         to=settings.AUTH_USER_MODEL,
@@ -132,11 +136,11 @@ class AgentResponse(models.Model):
     )
     agent_version = models.CharField(
         verbose_name='agent_version',
-        max_length=25,
+        max_length=50,
     )
     ip_address = models.CharField(
         verbose_name='ip_address',
-        max_length=25,
+        max_length=50,
     )
     os_type = models.CharField(  # should contain an array?
         verbose_name='os_type',
@@ -144,23 +148,23 @@ class AgentResponse(models.Model):
     )
     os_version = models.CharField(
         verbose_name='os_version',
-        max_length=30,
+        max_length=50,
     )
     system_manufacturer = models.CharField(
         verbose_name='system_manufacturer',
-        max_length=25,
+        max_length=50,
     )
     system_model = models.CharField(
         verbose_name='system_model',
-        max_length=25,
+        max_length=50,
     )
     system_type = models.CharField(
         verbose_name='system_type',
-        max_length=25,
+        max_length=50,
     )
     bios_version = models.CharField(
         verbose_name='bios_version',
-        max_length=25,
+        max_length=50,
     )
     antispyware_enabled = models.BooleanField(
         verbose_name='antispyware_enabled',
@@ -212,18 +216,9 @@ class AgentResponse(models.Model):
     )
     protection_status = models.CharField(  # does it have to be a string?
         verbose_name='protection_status',
-        max_length=25,
+        max_length=50,
     )
-    installed_apps = models.ForeignKey(
-        verbose_name='installed_apps',
-        to='api.InstalledApps',
-        on_delete=models.CASCADE,
-    )
-    startup_apps = models.ForeignKey(
-        verbose_name='startup_apps',
-        to='api.StartupApps',
-        on_delete=models.CASCADE,
-    )
+
 
     def __str__(self):
         return f"{self.date_created} | {self.computer_name} | ip: {self.ip_address}"
@@ -250,6 +245,12 @@ class StartupApps(models.Model):
         max_length=50,
         null=True,
     )
+    agent_response = models.ForeignKey(
+        verbose_name='agent_response',
+        to='api.AgentResponse',
+        on_delete=models.CASCADE,
+    )
+
 
     def __str__(self):
         return f"{self.name} | command: {self.command}"
@@ -275,6 +276,11 @@ class InstalledApps(models.Model):
         verbose_name='install_date',
         max_length=25,
         null=True,
+    )
+    agent_response = models.ForeignKey(
+        verbose_name='agent_response',
+        to='api.AgentResponse',
+        on_delete=models.CASCADE,
     )
 
     def __str__(self):
