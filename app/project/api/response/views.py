@@ -1,5 +1,5 @@
 from rest_framework.exceptions import NotFound
-from rest_framework.generics import CreateAPIView, GenericAPIView
+from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -51,5 +51,6 @@ class AgentPostsResponseView(GenericAPIView):
                                     )
 
         return Response(ResponseSerializer(agents_response).data)
+
 
 
