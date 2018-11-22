@@ -1,7 +1,8 @@
-from project.api.models import SecurityStandard
+from project.api.models import SecurityStandard, Agent
+from _datetime import datetime
 
 
-def compareFn(agent_response):
+def compare_fn(agent_response):
     # get the relevant security standard
     standard = SecurityStandard.objects.filter(
         os_type=agent_response.os_type
@@ -16,15 +17,18 @@ def compareFn(agent_response):
         "real_time_protection_enabled",
         "protection_status"
     ]
-
-    message = {
-        "title": "BAB Security Report",
-        "status": "ok"
-    }
+    secure = True
+    message = {"title": "BAB Security Report"}
     # check keys in standard vs response and adds error messages where needed
     for key in fields_to_check:
         if not getattr(agent_response, key) == getattr(standard, key):
-            message.update(status="DANGER")
+            secure = False
             message[key] = f'should be "{getattr(standard, key)}". Current value: "{getattr(agent_response, key)}"'
+
+    message["status"] = "ok" if secure else "DANGER"
+    agent = agent_response.agent
+    agent.secure = secure
+    agent.last_response_received = datetime.now()
+    agent.save()
 
     return message

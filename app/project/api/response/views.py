@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from project.api.models import AgentResponse
 from project.api.response.serializer import ResponseSerializer
 
-from project.api.response.response_helper import compareFn
+from project.api.response.response_helper import compare_fn
 
 
 class GetAgentsResponsesView(APIView):
@@ -31,4 +31,4 @@ class AgentPostsResponseView(GenericAPIView):
         )
         if serializer.is_valid(raise_exception=True):
             agent_response = serializer.save(**serializer.validated_data)
-            return Response(compareFn(agent_response))
+            return Response(compare_fn(agent_response))
