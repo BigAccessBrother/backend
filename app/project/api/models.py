@@ -130,6 +130,7 @@ class AgentResponse(models.Model):
         to='Agent',
         related_name='agent',
         on_delete=models.CASCADE,
+        null=True,
     )
     agent_version = models.CharField(
         verbose_name='agent_version',
