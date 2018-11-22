@@ -51,6 +51,3 @@ class AgentPostsResponseView(GenericAPIView):
                                     )
 
         return Response(ResponseSerializer(agents_response).data)
-
-
-
