@@ -224,22 +224,22 @@ class AgentResponse(models.Model):
 class StartupApps(models.Model):
     name = models.CharField(
         verbose_name='app_name',
-        max_length=50,
+        max_length=150,
         null=True,
     )
     command = models.CharField(
         verbose_name='command',
-        max_length=50,
+        max_length=150,
         null=True,
     )
     location = models.CharField(
         verbose_name='location',
-        max_length=50,
+        max_length=150,
         null=True,
     )
     user = models.CharField(
         verbose_name='app_user',
-        max_length=50,
+        max_length=150,
         null=True,
     )
     agent_response = models.ForeignKey(
@@ -255,7 +255,7 @@ class StartupApps(models.Model):
 class InstalledApps(models.Model):
     name = models.CharField(
         verbose_name='app_name',
-        max_length=50,
+        max_length=150,
         null=True,
     )
     vendor = models.CharField(
