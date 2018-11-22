@@ -133,6 +133,7 @@ class AgentResponse(models.Model):
         to='Agent',
         related_name='agent',
         on_delete=models.CASCADE,
+        null=True,
     )
     agent_version = models.CharField(
         verbose_name='agent_version',
@@ -221,7 +222,7 @@ class AgentResponse(models.Model):
 
 
     def __str__(self):
-        return f"{self.date_created} | {self.computer_name} | ip: {self.ip_address}"
+        return f"{self.date_created} | ip: {self.ip_address}"
 
 
 class StartupApps(models.Model):
