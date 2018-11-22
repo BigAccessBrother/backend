@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from project.api.models import AgentResponse, Agent, StartupApps, InstalledApps
+from project.api.models import AgentResponse, Agent, StartupApp, InstalledApp
 
 
 class ResponseSerializer(serializers.ModelSerializer):
@@ -29,7 +29,7 @@ class ResponseSerializer(serializers.ModelSerializer):
 
         # create all the apps
         for app in self.initial_data.get('startup_apps'):
-            StartupApps.objects.create(
+            StartupApp.objects.create(
                 name=app.get('name'),
                 command=app.get('command'),
                 location=app.get('location'),
@@ -37,7 +37,7 @@ class ResponseSerializer(serializers.ModelSerializer):
                 agent_response=agent_response
             )
         for app in self.initial_data.get('installed_apps'):
-            InstalledApps.objects.create(
+            InstalledApp.objects.create(
                 name=app.get('name'),
                 vendor=app.get('vendor'),
                 version=app.get('version'),

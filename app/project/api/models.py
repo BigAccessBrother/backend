@@ -221,7 +221,7 @@ class AgentResponse(models.Model):
         return f"{self.date_created} | ip: {self.ip_address}"
 
 
-class StartupApps(models.Model):
+class StartupApp(models.Model):
     name = models.CharField(
         verbose_name='app_name',
         max_length=150,
@@ -252,7 +252,7 @@ class StartupApps(models.Model):
         return f"{self.name} | command: {self.command}"
 
 
-class InstalledApps(models.Model):
+class InstalledApp(models.Model):
     name = models.CharField(
         verbose_name='app_name',
         max_length=150,
