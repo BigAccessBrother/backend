@@ -1,4 +1,4 @@
-from project.api.models import SecurityStandard, Agent
+from project.api.models import SecurityStandard
 from _datetime import datetime
 
 
@@ -30,5 +30,4 @@ def compare_fn(agent_response):
     agent.secure = secure
     agent.last_response_received = datetime.now()
     agent.save()
-
     return message
