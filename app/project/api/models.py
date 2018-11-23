@@ -242,7 +242,7 @@ class StartupApp(models.Model):
     )
     command = models.CharField(
         verbose_name='command',
-        max_length=150,
+        max_length=500,
         null=True,
         blank=True
     )
