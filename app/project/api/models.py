@@ -12,6 +12,7 @@ class UserProfile(models.Model):
         related_name='user_profile',
     )
 
+
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
@@ -104,7 +105,7 @@ class Alert(models.Model):
         null=True,
         blank=True
     )
-    to = models.EmailField(  # should it be email field?
+    to = models.EmailField(
         verbose_name='alert_to',
         max_length=35,
     )
