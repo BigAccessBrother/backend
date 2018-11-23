@@ -28,6 +28,9 @@ class Agent(models.Model):
 
     # owner = models.ForeignKey('auth.User', related_name='auth_user', on_delete=models.CASCADE,)
 
+    class Meta:
+        ordering = ['-last_response_received']
+
     user = models.ForeignKey(
         verbose_name='user',
         to=settings.AUTH_USER_MODEL,
@@ -146,6 +149,8 @@ class AgentResponse(models.Model):
     ip_address = models.CharField(
         verbose_name='ip_address',
         max_length=50,
+        null=True,
+        blank=True
     )
     os_type = models.CharField(  # should contain an array?
         verbose_name='os_type',

@@ -23,7 +23,7 @@ class AgentRegisterView(APIView):
 
     def post(self, request, **kwargs):
         try:
-            user = User.objects.get(username=request.data['username'])
+            user = User.objects.get(email=request.data['email'])
         except User.DoesNotExist:
             raise NotFound('User does not exist')
         try:
@@ -34,7 +34,7 @@ class AgentRegisterView(APIView):
         agent = Agent.objects.create(
             user=user,
             system_serial_number=request.data['system_serial_number'],
-            computer_name=f'{user.username} {user.agents.count()+1}',
+            computer_name=f'{user.email} {user.agents.count()+1}',
         )
 
         self.send_agent_register_email(agent)
