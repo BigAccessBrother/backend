@@ -4,7 +4,6 @@ from project.api.models import AgentResponse, Agent, StartupApp, InstalledApp
 
 
 class ResponseSerializer(serializers.ModelSerializer):
-    ip_address = serializers.SerializerMethodField()
 
     class Meta:
         model = AgentResponse
