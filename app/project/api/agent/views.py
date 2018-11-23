@@ -50,4 +50,3 @@ class AgentRegisterView(APIView):
             to=[admin.email for admin in admins],
         )
         message.send()
-
