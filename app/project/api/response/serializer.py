@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from project.api.models import AgentResponse, Agent
+from project.api.models import AgentResponse, Agent, StartupApp, InstalledApp
 
 
 class ResponseSerializer(serializers.ModelSerializer):
@@ -17,6 +17,7 @@ class ResponseSerializer(serializers.ModelSerializer):
         read_only_fields = ['id', 'date_created']
 
     def create(self, validated_data):
+        # create the AgentResponse entry
         number = self.initial_data.get('system_serial_number')
         agent = Agent.objects.get(system_serial_number=number)
         ip_address = self.context.get('request').META.get('REMOTE_ADDR')
@@ -25,4 +26,23 @@ class ResponseSerializer(serializers.ModelSerializer):
             agent=agent,
             **validated_data,
         )
+
+        # create all the apps
+        for app in self.initial_data.get('startup_apps'):
+            StartupApp.objects.create(
+                name=app.get('name'),
+                command=app.get('command'),
+                location=app.get('location'),
+                user=app.get('user'),
+                agent_response=agent_response
+            )
+        for app in self.initial_data.get('installed_apps'):
+            InstalledApp.objects.create(
+                name=app.get('name'),
+                vendor=app.get('vendor'),
+                version=app.get('version'),
+                install_date=app.get('install_date'),
+                agent_response=agent_response
+            )
+
         return agent_response
