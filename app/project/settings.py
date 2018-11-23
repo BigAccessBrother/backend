@@ -148,6 +148,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'students@propulsionacademy.com'
+EMAIL_HOST_PASSWORD = 'VNZ4NVUTa8LM{i38{zCGjCG6ewjaNnR8Njhph@Rf'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+DEFAULT_FROM_EMAIL = 'students@propulsionacademy.com'
+
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (

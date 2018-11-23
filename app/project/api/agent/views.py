@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.core.mail import EmailMessage
 from rest_framework.exceptions import NotFound
 from rest_framework.generics import ListAPIView, DestroyAPIView
 from rest_framework.response import Response
@@ -35,4 +36,19 @@ class AgentRegisterView(APIView):
             system_serial_number=request.data['system_serial_number'],
             computer_name=f'{user.username} {user.agents.count()+1}',
         )
+
+        self.send_agent_register_email()
+
         return Response(AgentSerializer(agent).data)
+
+    def send_agent_register_email(self):
+        admins = User.objects.filter(is_staff=True)
+        message = EmailMessage(
+            subject='Agent Registration',
+            body=f'Some infos about the agent',
+            to=[admin.email for admin in admins],
+        )
+        print('in send mail')
+        message.send()
+
+
