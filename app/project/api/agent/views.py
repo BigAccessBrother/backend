@@ -50,5 +50,3 @@ class AgentRegisterView(APIView):
         )
         print('in send mail')
         message.send()
-
-
