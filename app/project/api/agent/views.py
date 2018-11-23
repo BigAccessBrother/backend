@@ -37,16 +37,17 @@ class AgentRegisterView(APIView):
             computer_name=f'{user.username} {user.agents.count()+1}',
         )
 
-        self.send_agent_register_email()
+        self.send_agent_register_email(agent)
 
         return Response(AgentSerializer(agent).data)
 
-    def send_agent_register_email(self):
+    def send_agent_register_email(self, agent):
         admins = User.objects.filter(is_staff=True)
         message = EmailMessage(
             subject='Agent Registration',
-            body=f'Some infos about the agent',
+            body=f'User: {agent.user}\nSystem Serial Number: {agent.system_serial_number}\n'
+                 f'Computer name: {agent.computer_name} ',
             to=[admin.email for admin in admins],
         )
-        print('in send mail')
         message.send()
+
