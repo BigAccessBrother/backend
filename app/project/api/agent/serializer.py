@@ -15,7 +15,6 @@ class AgentSerializer(serializers.ModelSerializer):
         except Exception:
             return 'no responses yet'
 
-
     class Meta:
         model = Agent
         fields = ['id', 'user', 'computer_name', 'last_response_received', 'secure', 'date_created',
