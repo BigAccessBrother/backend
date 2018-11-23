@@ -57,7 +57,7 @@ class Agent(models.Model):
         verbose_name='system_serial_number',
         max_length=25,
         null=True,
-        blank = True
+        blank=True
     )
     is_active = models.BooleanField(
         verbose_name='is_active',
