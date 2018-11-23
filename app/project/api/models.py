@@ -236,19 +236,19 @@ class AgentResponse(models.Model):
 class StartupApp(models.Model):
     name = models.CharField(
         verbose_name='app_name',
-        max_length=150,
+        max_length=255,
         null=True,
         blank=True
     )
     command = models.CharField(
         verbose_name='command',
-        max_length=500,
+        max_length=255,
         null=True,
         blank=True
     )
     location = models.CharField(
         verbose_name='location',
-        max_length=150,
+        max_length=255,
         null=True,
         blank=True
     )
@@ -271,7 +271,7 @@ class StartupApp(models.Model):
 class InstalledApp(models.Model):
     name = models.CharField(
         verbose_name='app_name',
-        max_length=150,
+        max_length=255,
         null=True,
         blank=True
     )
