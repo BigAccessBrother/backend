@@ -224,7 +224,7 @@ class AgentResponse(models.Model):
         verbose_name='real_time_protection_enabled',
         default=False,
     )
-    protection_status = models.CharField(  # does it have to be a string?
+    disk_encryption_status = models.CharField(
         verbose_name='protection_status',
         max_length=50,
     )
