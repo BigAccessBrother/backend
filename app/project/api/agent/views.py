@@ -22,6 +22,7 @@ class AgentDeleteView(DestroyAPIView):
 class AgentRegisterView(APIView):
 
     def post(self, request, **kwargs):
+        # check if user exists (should be created when login credential are done)
         try:
             user = User.objects.get(email=request.data['email'])
         except User.DoesNotExist:
@@ -30,11 +31,11 @@ class AgentRegisterView(APIView):
             user.check_password(request.data['password'])
         except Exception:
             raise NotFound(f'Password wrong')
-
+        # if pw correct, agent registered on user is created and gets a name referring to the user
         agent = Agent.objects.create(
             user=user,
             system_serial_number=request.data['system_serial_number'],
-            computer_name=f'{user.email} {user.agents.count()+1}',
+            computer_name=f'{user.email} {user.agents.count()+1}th agent',
         )
 
         self.send_agent_register_email(agent)
