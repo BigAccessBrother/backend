@@ -26,7 +26,7 @@ class AgentRegisterView(APIView):
         try:
             user = User.objects.get(email=request.data['email'])
         except User.DoesNotExist:
-            raise NotFound('User does not exist')
+            raise NotFound('user does not exist')
         try:
             user.check_password(request.data['password'])
         except Exception:
@@ -46,7 +46,7 @@ class AgentRegisterView(APIView):
         admins = User.objects.filter(is_staff=True)
         message = EmailMessage(
             subject='Agent Registration',
-            body=f'User: {agent.user}\nSystem Serial Number: {agent.system_serial_number}\n'
+            body=f'user: {agent.user}\nSystem Serial Number: {agent.system_serial_number}\n'
                  f'Computer name: {agent.computer_name} ',
             to=[admin.email for admin in admins],
         )

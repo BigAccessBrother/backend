@@ -26,7 +26,7 @@ def save_user_profile(sender, instance, **kwargs):
 
 class Agent(models.Model):
 
-    # owner = models.ForeignKey('auth.User', related_name='auth_user', on_delete=models.CASCADE,)
+    # owner = models.ForeignKey('auth.user', related_name='auth_user', on_delete=models.CASCADE,)
 
     class Meta:
         ordering = ['-last_response_received']

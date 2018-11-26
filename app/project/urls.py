@@ -26,4 +26,5 @@ urlpatterns = [
     path('api/home/', HomeView, name='home'),
     path('api/auth/', include('project.api.authentication.urls')),
     path('api/standards/', include('project.api.standards.urls')),
+    path('api/users/', include('project.api.user.urls')),
 ]
