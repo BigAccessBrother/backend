@@ -1,11 +1,14 @@
 from django.contrib.auth.models import User
 from rest_framework.generics import ListAPIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+from project.api.permissions import IsAdmin
 from project.api.user.serializer import UserSerializer
 
 
 class UserListView(ListAPIView):
+    permission_classes = (IsAdmin, IsAuthenticated)
     queryset = User.objects.all()
     serializer_class = UserSerializer
 

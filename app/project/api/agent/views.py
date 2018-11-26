@@ -2,24 +2,29 @@ from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 from rest_framework.exceptions import NotFound
 from rest_framework.generics import ListAPIView, DestroyAPIView, UpdateAPIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from project.api.agent.serializer import AgentSerializer
 from project.api.models import Agent
+from project.api.permissions import IsAdmin
 
 
 class ListAllAgents(ListAPIView):
+    permission_classes = (IsAdmin, IsAuthenticated)
     queryset = Agent.objects.all()
     serializer_class = AgentSerializer
 
 
 class AgentDeleteView(DestroyAPIView):
+    permission_classes = (IsAdmin, IsAuthenticated)
     queryset = Agent.objects.all()
     serializer_class = AgentSerializer
 
 
 class AgentActivateView(UpdateAPIView):
+    permission_classes = (IsAdmin, IsAuthenticated)
     serializer_class = AgentSerializer
 
     def get_queryset(self):

@@ -34,7 +34,7 @@ def get_time(string):
 # compare provided agent_response to security standard
 def compare_fn(agent_response):
     secure = True
-    report = {"title": "BAB Security Report"}
+    report = {}
     now = datetime.now()
 
     # get the latest security standard for matching OS_type
