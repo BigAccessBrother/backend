@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 from rest_framework.exceptions import NotFound
-from rest_framework.generics import ListAPIView, DestroyAPIView
+from rest_framework.generics import ListAPIView, DestroyAPIView, UpdateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -19,10 +19,23 @@ class AgentDeleteView(DestroyAPIView):
     serializer_class = AgentSerializer
 
 
+class AgentActivateView(UpdateAPIView):
+    serializer_class = AgentSerializer
+
+    def get_queryset(self):
+        return Agent.objects.filter(id=self.kwargs['pk'])
+
+    def partial_update(self, request, *args, **kwargs):
+        serializer = AgentSerializer(data=request.data, partial=True)
+        if serializer.is_valid(raise_exception=True):
+            agent = serializer.save(**serializer.validated_data)
+            return Response(AgentSerializer(agent).data)
+
+
 class AgentRegisterView(APIView):
 
     def post(self, request, **kwargs):
-        # check if user exists (should be created when login credential are done)
+        # check if user exists
         try:
             user = User.objects.get(email=request.data['email'])
         except User.DoesNotExist:
@@ -31,7 +44,7 @@ class AgentRegisterView(APIView):
             user.check_password(request.data['password'])
         except Exception:
             raise NotFound(f'Password wrong')
-        # if pw correct, agent registered on user is created and gets a name referring to the user
+        # if pw correct, agent registered on user is created
         agent = Agent.objects.create(
             user=user,
             system_serial_number=request.data['system_serial_number'],
