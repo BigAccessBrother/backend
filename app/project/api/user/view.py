@@ -30,7 +30,7 @@ class UserUpdateView(UpdateAPIView):
     serializer_class = UserSerializer
 
     def get_queryset(self):
-        return User.objects.filter(id=self.kwargs['pk'])
+        return User.objects.filter(id=self.kwargs['pk'])  # is that ok?
 
     def partial_update(self, request, *args, **kwargs):
         serializer = UserSerializer(data=request.data, partial=True)
