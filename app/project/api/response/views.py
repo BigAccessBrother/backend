@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from project.api.models import AgentResponse
+from project.api.permissions import HasRegisteredAgent
 from project.api.response.serializer import ResponseSerializer
 
 from project.api.response.response_helper import compare_fn
@@ -21,6 +22,8 @@ class GetAgentsResponsesView(APIView):
 
 
 class AgentPostsResponseView(GenericAPIView):
+    permission_classes = [HasRegisteredAgent]
+
     serializer_class = ResponseSerializer
     queryset = AgentResponse.objects.all()
 
