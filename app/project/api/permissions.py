@@ -11,3 +11,9 @@ class HasRegisteredAgent(permissions.BasePermission):
         except Agent.DoesNotExist:
             return False
         return True
+
+
+class IsAdmin(permissions.BasePermission):
+
+    def has_permission(self, request, view):
+        return request.user.is_staff

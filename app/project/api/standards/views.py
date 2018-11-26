@@ -1,10 +1,13 @@
 from rest_framework.generics import ListAPIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from project.api.models import SecurityStandard
+from project.api.permissions import IsAdmin
 from project.api.standards.serializer import StandardSerializer
 
 
 class StandardsView(ListAPIView):
+    permission_classes = (IsAdmin, IsAuthenticated)
     queryset = SecurityStandard.objects.all()
     serializer_class = StandardSerializer
 

@@ -1,15 +1,17 @@
 from rest_framework.exceptions import NotFound
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from project.api.models import AgentResponse
-from project.api.permissions import HasRegisteredAgent
+from project.api.permissions import HasRegisteredAgent, IsAdmin
 from project.api.response.serializer import ResponseSerializer
 
 from project.api.response.response_helper import compare_fn
 
 
 class GetAgentsResponsesView(APIView):
+    permission_classes = (IsAdmin, IsAuthenticated)
 
     def get(self, request, agent_id, **kwargs):
         try:
@@ -21,7 +23,7 @@ class GetAgentsResponsesView(APIView):
 
 
 class AgentPostsResponseView(APIView):
-    permission_classes = (HasRegisteredAgent, )
+    permission_classes = (HasRegisteredAgent, IsAuthenticated)
 
     serializer_class = ResponseSerializer
     queryset = AgentResponse.objects.all()
