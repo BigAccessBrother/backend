@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from rest_framework.generics import ListAPIView, CreateAPIView
+from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 
 from project.api.user.serializer import UserSerializer
