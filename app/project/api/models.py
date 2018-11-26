@@ -39,7 +39,7 @@ class Agent(models.Model):
     )
     computer_name = models.CharField(
         verbose_name='name',
-        max_length=25,
+        max_length=50,
         null=True,
         blank=True
     )
