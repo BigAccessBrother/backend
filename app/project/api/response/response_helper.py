@@ -53,13 +53,15 @@ def compare_fn(agent_response):
     for key in fields_to_check["days"]:
         if int(getattr(agent_response, key)) > int(getattr(standard, key)):
             secure = False
-            report[key] = f'should be max {getattr(standard, key)} days. Current value: {getattr(agent_response, key)} days'
+            report[key] = f'should be max {getattr(standard, key)} days. ' \
+                          f'Current value: {getattr(agent_response, key)} days'
 
     # dates:
     for key in fields_to_check["dates"]:
         if (now - get_time(getattr(agent_response, key))).days > int(getattr(standard, key)):
             secure = False
-            report[key] = f'should be max {getattr(standard, key)} days ago. Current value: {getattr(agent_response, key)}'
+            report[key] = f'should be max {getattr(standard, key)} ' \
+                          f'days ago. Current value: {getattr(agent_response, key)}'
 
     # add report summary
     report["status"] = "ok" if secure else "DANGER"
