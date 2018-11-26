@@ -21,8 +21,8 @@ class GetAgentsResponsesView(APIView):
         return Response(serializer.data)
 
 
-class AgentPostsResponseView(GenericAPIView):
-    permission_classes = [HasRegisteredAgent]
+class AgentPostsResponseView(APIView):
+    permission_classes = (HasRegisteredAgent, )
 
     serializer_class = ResponseSerializer
     queryset = AgentResponse.objects.all()
