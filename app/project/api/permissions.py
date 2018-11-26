@@ -12,5 +12,3 @@ class HasRegisteredAgent(permissions.BasePermission):
             return True
         else:
             return HttpResponseForbidden()
-
-
