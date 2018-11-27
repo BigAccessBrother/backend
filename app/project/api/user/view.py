@@ -1,19 +1,18 @@
 from django.contrib.auth.models import User
-from rest_framework.generics import ListAPIView, DestroyAPIView, UpdateAPIView
+from rest_framework.generics import ListAPIView, DestroyAPIView, UpdateAPIView, GenericAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from project.api.permissions import IsAdmin
-from project.api.user.serializer import UserSerializer
+from project.api.user.serializer import UserSerializer, ActiveUserSerializer
 
 
-class ActiveUserView(ListAPIView):
+class ActiveUserView(GenericAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = ActiveUserSerializer
 
-    def get_queryset(self):
-        active_user = self.queryset.filter(id=self.request.user.id)
-        return active_user
+    def get(self, *args, **kwargs):
+        return Response(UserSerializer(self.request.user).data)
 
 
 class UserListView(ListAPIView):
