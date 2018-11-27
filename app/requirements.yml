@@ -12,4 +12,5 @@ dependencies:
   - flake8
   - coreapi==2.3.3
   - django-cors-headers==2.4.0
+  - django_cron==0.5.1
 

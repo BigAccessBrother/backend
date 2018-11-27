@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'project.api',
     'rest_framework',
     'corsheaders',  # needed to connect from frontend
+    'django_cron',
 ]
 
 MIDDLEWARE = [
@@ -55,6 +56,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CRON_CLASSES = [
+    "app.cron.CronSendAlerts",
+]
+
 
 # open API to everyone. We might want to change this for production
 CORS_ORIGIN_ALLOW_ALL = True
