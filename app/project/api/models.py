@@ -225,7 +225,7 @@ class AgentResponse(models.Model):
         default=False,
     )
     disk_encryption_status = models.CharField(
-        verbose_name='protection_status',
+        verbose_name='disk_encryption_status',
         max_length=50,
     )
 
@@ -332,7 +332,7 @@ class SecurityStandard(models.Model):
         blank=True
     )
     system_model = models.CharField(
-        verbose_name='system_mode',
+        verbose_name='system_model',
         max_length=50,
         null=True,
         blank=True
@@ -344,7 +344,7 @@ class SecurityStandard(models.Model):
         blank=True
     )
     bios_version = models.CharField(
-        verbose_name='system_type',
+        verbose_name='bios_version',
         max_length=50,
         null=True,
         blank=True
@@ -415,8 +415,8 @@ class SecurityStandard(models.Model):
         null=True,
         blank=True
     )
-    protection_status = models.CharField(
-        verbose_name='protection_status',
+    disk_encryption_status = models.CharField(
+        verbose_name='disk_encryption_status',
         max_length=50,
         null=True,
         blank=True

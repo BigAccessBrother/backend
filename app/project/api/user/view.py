@@ -7,6 +7,15 @@ from project.api.permissions import IsAdmin
 from project.api.user.serializer import UserSerializer
 
 
+class ActiveUserView(ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    def get_queryset(self):
+        active_user = self.queryset.filter(id=self.request.user.id)
+        return active_user
+
+
 class UserListView(ListAPIView):
     permission_classes = (IsAdmin, IsAuthenticated)
     queryset = User.objects.all()
@@ -30,7 +39,7 @@ class UserUpdateView(UpdateAPIView):
     serializer_class = UserSerializer
 
     def get_queryset(self):
-        return User.objects.filter(id=self.kwargs['pk'])  # is that ok?
+        return User.objects.filter(id=self.kwargs['pk'])
 
     def partial_update(self, request, *args, **kwargs):
         serializer = UserSerializer(data=request.data, partial=True)
