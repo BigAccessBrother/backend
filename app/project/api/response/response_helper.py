@@ -1,3 +1,6 @@
+from django.contrib.auth.models import User
+from django.core.mail import EmailMessage
+
 from project.api.models import SecurityStandard
 from _datetime import datetime
 
@@ -72,8 +75,25 @@ def compare_fn(agent_response):
     agent.last_response_received = now
     agent.save()
 
-    # if not secure:
-    # send email notification
+    if not secure:
+        send_alert(report, agent)
 
     # return status report
     return report
+
+
+def send_alert(report, agent):
+    admins = User.objects.filter(is_staff=True)
+    intro = f'Security alert was sent at {agent.last_response_received} by the following endpoint:\n\n'f'User: ' \
+            f'{agent.user}\nSystem Serial Number: {agent.system_serial_number}\n'f'Computer name: ' \
+            f'{agent.computer_name}\n\n\n'f'Report:\n\n'
+    details = ''
+    for key, value in report.items():
+        details += key + ' ' + value + '\n'
+
+    message = EmailMessage(
+        subject='Endpoint Security Alert',
+        body=f'{intro}{details}',
+        to=[admin.email for admin in admins],
+    )
+    message.send()
