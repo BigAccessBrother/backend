@@ -18,3 +18,4 @@ def create_alert(report, agent):
         to=[admin.email for admin in admins],
         sent=False
     )
+
