@@ -13,4 +13,3 @@ dependencies:
   - coreapi==2.3.3
   - django-cors-headers==2.4.0
 
-
