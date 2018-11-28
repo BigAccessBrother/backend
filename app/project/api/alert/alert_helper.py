@@ -19,3 +19,4 @@ def create_alert(report, agent):
         sent=False
     )
 
+
