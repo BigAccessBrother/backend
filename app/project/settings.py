@@ -57,6 +57,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
 # open API to everyone. We might want to change this for production
 CORS_ORIGIN_ALLOW_ALL = True
 
