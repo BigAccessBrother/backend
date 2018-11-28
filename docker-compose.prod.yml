@@ -30,7 +30,13 @@ services:
       - static-files:/static-files
       - media-files:/media-files
 
-
+  email:
+    image: registry.gitlab.propulsion-home.ch/full-stack/batch-2018-09/personal-projects/bab/backend:latest
+    volumes:
+    - ./app:/app
+    command: 'python manage.py send_mail'
+    depends_on:
+    - postgres
 
 volumes:
   postgres:

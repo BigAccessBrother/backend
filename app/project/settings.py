@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'project.api',
     'rest_framework',
     'corsheaders',  # needed to connect from frontend
-    'django_cron',
 ]
 
 MIDDLEWARE = [
@@ -55,10 +54,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
-
-CRON_CLASSES = [
-    "app.cron.CronSendAlerts",
 ]
 
 

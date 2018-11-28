@@ -124,6 +124,9 @@ class Alert(models.Model):
         default=False,
     )
 
+    def __str__(self):
+        return f"{self.target_machine} | alert sent: {self.sent}"
+
 
 class AgentResponse(models.Model):
 
