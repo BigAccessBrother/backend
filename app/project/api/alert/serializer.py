@@ -9,4 +9,3 @@ class AlertSerializer(serializers.ModelSerializer):
         model = Alert
         fields = ['id', 'target_machine', 'subject', 'content', 'to', 'created', 'sent']
         read_only_fields = ['id']
-
