@@ -2,10 +2,12 @@ from rest_framework import serializers
 
 from project.api.models import Agent, AgentResponse
 from project.api.response.serializer import ResponseSerializer
+from project.api.user.serializer import ActiveUserSerializer
 
 
 class AgentSerializer(serializers.ModelSerializer):
 
+    user = ActiveUserSerializer(read_only=True)
     latest_response = serializers.SerializerMethodField(read_only=True)
 
     def get_latest_response(self, agent):

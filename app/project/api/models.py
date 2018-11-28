@@ -29,7 +29,7 @@ class Agent(models.Model):
     # owner = models.ForeignKey('auth.user', related_name='auth_user', on_delete=models.CASCADE,)
 
     class Meta:
-        ordering = ['-last_response_received']
+        ordering = ['secure', '-last_response_received']
 
     user = models.ForeignKey(
         verbose_name='user',
