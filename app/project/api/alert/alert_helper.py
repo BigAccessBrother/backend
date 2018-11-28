@@ -11,12 +11,10 @@ def create_alert(report, agent):
     for key, value in report.items():
         details += key + ' ' + value + '\n'
 
-    alert = Alert.objects.create(
+    Alert.objects.create(
         target_machine=agent.computer_name,
         subject=f'Endpoint Security Alert for {agent.computer_name}',
         content=f'{resume}{details} \n\n',
         to=[admin.email for admin in admins],
         sent=False
     )
-
-
