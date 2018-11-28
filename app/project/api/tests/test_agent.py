@@ -1,5 +1,4 @@
 # from django.contrib.auth import get_user_model
-#
 # from project.api.models import Agent
 # from project.api.tests.master_tests import MasterTestWrapper
 #
