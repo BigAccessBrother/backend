@@ -12,7 +12,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         while True:
-            time.sleep(20)
+            time.sleep(30)
             admins = User.objects.filter(is_staff=True)
             alerts_to_send = Alert.objects.filter(sent=False)
             if len(alerts_to_send) > 0:
@@ -23,7 +23,7 @@ class Command(BaseCommand):
 
                 message = EmailMessage(
                     subject='BAB Alerts',
-                    body=all_alerts,
+                    body='Current Alerts \n' + all_alerts,
                     to=[admin.email for admin in admins],
                 )
                 message.send()
