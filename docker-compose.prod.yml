@@ -31,7 +31,7 @@ services:
       - media-files:/media-files
 
   email:
-    image: registry.gitlab.propulsion-home.ch/full-stack/batch-2018-09/personal-projects/bab/backend:latest
+    image: registry.gitlab.propulsion-home.ch/full-stack/batch-2018-09/personal-projects/bab/backend:latest #same image?
     volumes:
     - ./app:/app
     command: 'python manage.py send_mail'
