@@ -43,17 +43,6 @@ COPY ./app /app
 COPY scripts /scripts
 RUN chmod +x /scripts/*
 
-# # Front-end. Officially commented out because we're not using it.
-# WORKDIR /front-end
-# COPY ./front-end/package.json /front-end/
-# COPY ./front-end/package-lock.json /front-end/
-# RUN npm install
-# COPY ./front-end /front-end
-# RUN npm run build
-
-# # start app
-# CMD ["npm", "start"]
-
 WORKDIR /app
 
 EXPOSE 8000
