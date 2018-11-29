@@ -111,10 +111,12 @@ class Alert(models.Model):
     to = models.EmailField(
         verbose_name='alert_to',
         max_length=35,
+        null=True,
+        blank=True
     )
     subject = models.CharField(
         verbose_name='alert_subject',
-        max_length=35,
+        max_length=100,
     )
     content = models.TextField(
         verbose_name='alert_content',
