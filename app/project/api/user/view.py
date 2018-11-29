@@ -44,3 +44,4 @@ class UserUpdateView(UpdateAPIView):
         if serializer.is_valid(raise_exception=True):
             user = serializer.save(**serializer.validated_data)
             return Response(UserSerializer(user).data)
+
