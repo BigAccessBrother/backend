@@ -4,6 +4,7 @@
 #
 # User = get_user_model()
 #
+
 # class ListAgentsTest(MasterTestWrapper.MasterTests):
 #     endpoint = 'list-create-posts'
 #     methods = ['GET']
