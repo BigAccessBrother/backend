@@ -23,7 +23,7 @@ class Command(BaseCommand):
 
                 message = EmailMessage(
                     subject='BAB Alerts',
-                    body='Current Alerts \n' + all_alerts,
+                    body='Current Alerts \n\n' + all_alerts,
                     to=[admin.email for admin in admins],
                 )
                 message.send()

@@ -1,11 +1,10 @@
 # from django.contrib.auth import get_user_model
-#
 # from project.api.models import Agent
 # from project.api.tests.master_tests import MasterTestWrapper
 #
 # User = get_user_model()
 #
-#
+
 # class ListAgentsTest(MasterTestWrapper.MasterTests):
 #     endpoint = 'list-create-posts'
 #     methods = ['GET']

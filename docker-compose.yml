@@ -1,14 +1,6 @@
 version: '3'
 services:
 
-#  nginx:
-#    image: nginx:latest
-#    ports:
-#      - "8000:80"
-#    volumes:
-#      - ./nginx:/etc/nginx/conf.d
-#      - ./front-end:/front-end
-
   postgres:
     image: postgres:latest
     environment:
