@@ -40,3 +40,8 @@ volumes:
   postgres:
   media-files:
   static-files:
+
+networks:
+  default:
+    external:
+      name: bab
