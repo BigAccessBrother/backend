@@ -19,7 +19,7 @@ from django.urls import path, include
 
 from project.api.home.views import HomeView
 
-urlpatterns = [
+mypatterns = [
     path('admin/', admin.site.urls),
     path('api/agent/', include('project.api.agent.urls')),
     path('api/response/', include('project.api.response.urls')),
@@ -27,4 +27,8 @@ urlpatterns = [
     path('api/auth/', include('project.api.authentication.urls')),
     path('api/standards/', include('project.api.standards.urls')),
     path('api/users/', include('project.api.user.urls')),
+]
+
+urlpatterns = [
+    path('backend/', include(mypatterns)),
 ]
