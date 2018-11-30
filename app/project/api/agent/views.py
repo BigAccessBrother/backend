@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from project.api.agent.agent_helper import name_agent
 from project.api.agent.serializer import AgentSerializer
 from project.api.models import Agent
 from project.api.permissions import IsAdmin
@@ -53,9 +54,9 @@ class AgentRegisterView(APIView):
         agent = Agent.objects.create(
             user=user,
             system_serial_number=request.data['system_serial_number'],
-            computer_name=f'{user.email} {user.agents.count()+1}th agent',
+            computer_name=name_agent(user.email, user.agents.count()),
         )
-
+        
         self.send_agent_register_email(agent)
 
         return Response(AgentSerializer(agent).data)
