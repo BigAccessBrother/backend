@@ -46,7 +46,7 @@ class Agent(models.Model):
     last_response_received = models.DateTimeField(
         verbose_name='last_response_received',
         null=True,
-        blank=True
+        blank=True,
     )
     secure = models.BooleanField(
         verbose_name='secure',
@@ -59,8 +59,7 @@ class Agent(models.Model):
     system_serial_number = models.CharField(
         verbose_name='system_serial_number',
         max_length=25,
-        null=True,
-        blank=True
+        unique=True,
     )
     is_active = models.BooleanField(
         verbose_name='is_active',
