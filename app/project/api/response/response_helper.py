@@ -33,7 +33,7 @@ def get_time(string):
 
 
 # compare provided agent_response to security standard
-def compare_fn(agent_response):
+def compare_fn(agent_response, create=True):
     secure = True
     report = {}
     now = datetime.now()
@@ -67,14 +67,15 @@ def compare_fn(agent_response):
     # add report summary
     report["status"] = "ok" if secure else "DANGER"
 
-    # update agent entry
-    agent = agent_response.agent
-    agent.secure = secure
-    agent.last_response_received = now
-    agent.save()
+    if create:
+        # update agent entry
+        agent = agent_response.agent
+        agent.secure = secure
+        agent.last_response_received = now
+        agent.save()
 
-    if not secure:
-        create_alert(report, agent)
+        if not secure:
+            create_alert(report, agent)
 
     # return status report
     return report

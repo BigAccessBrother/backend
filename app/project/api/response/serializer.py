@@ -1,9 +1,14 @@
 from rest_framework import serializers
 
 from project.api.models import AgentResponse, Agent, StartupApp, InstalledApp
+from project.api.response.response_helper import compare_fn
 
 
 class ResponseSerializer(serializers.ModelSerializer):
+    report = serializers.SerializerMethodField(read_only=True)
+
+    def get_report(self, obj):
+        return compare_fn(obj, create=False)
 
     class Meta:
         model = AgentResponse
@@ -12,8 +17,8 @@ class ResponseSerializer(serializers.ModelSerializer):
                   'antispyware_enabled', 'antispyware_signature_last_updated', 'antivirus_enabled',
                   'antivirus_signature_last_updated', 'behavior_monitor_enabled', 'full_scan_age', 'quick_scan_age',
                   'nis_enabled', 'nis_signature_last_updated', 'nis_signature_version', 'on_access_protection_enabled',
-                  'real_time_protection_enabled', 'disk_encryption_status']
-        read_only_fields = ['id', 'date_created']
+                  'real_time_protection_enabled', 'disk_encryption_status', 'report']
+        read_only_fields = ['id', 'date_created', 'report']
 
     def create(self, validated_data):
         # create the AgentResponse entry
