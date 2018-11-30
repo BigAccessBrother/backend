@@ -56,9 +56,7 @@ class AgentRegisterView(APIView):
             system_serial_number=request.data['system_serial_number'],
             computer_name=name_agent(user.email, user.agents.count()),
         )
-        
         self.send_agent_register_email(agent)
-
         return Response(AgentSerializer(agent).data)
 
     def send_agent_register_email(self, agent):
