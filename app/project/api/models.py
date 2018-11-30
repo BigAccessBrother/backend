@@ -356,8 +356,7 @@ class SecurityStandard(models.Model):
     )
     antispyware_enabled = models.BooleanField(
         verbose_name='antispyware_enabled',
-        null=True,
-        blank=True
+        default=True,
     )
     antispyware_signature_last_updated = models.CharField(
         verbose_name='antispyware_signature_last_updated',
@@ -367,8 +366,7 @@ class SecurityStandard(models.Model):
     )
     antivirus_enabled = models.BooleanField(
         verbose_name='antivirus_enabled',
-        null=True,
-        blank=True
+        default=True,
     )
     antivirus_signature_last_updated = models.CharField(
         verbose_name='antivirus_signature_last_updated',
@@ -378,8 +376,7 @@ class SecurityStandard(models.Model):
     )
     behavior_monitor_enabled = models.BooleanField(
         verbose_name='behavior_monitor_enabled',
-        null=True,
-        blank=True
+        default=True,
     )
     full_scan_age = models.TextField(
         verbose_name='full_scan_age',
@@ -395,8 +392,7 @@ class SecurityStandard(models.Model):
     )
     nis_enabled = models.BooleanField(
         verbose_name='nis_enabled',
-        null=True,
-        blank=True
+        default=True,
     )
     nis_signature_last_updated = models.CharField(
         verbose_name='nis_signature_last_updated',
@@ -412,13 +408,11 @@ class SecurityStandard(models.Model):
     )
     on_access_protection_enabled = models.BooleanField(
         verbose_name='on_access_protection_enabled',
-        null=True,
-        blank=True
+        default=True,
     )
     real_time_protection_enabled = models.BooleanField(
         verbose_name='real_time_protection_enabled',
-        null=True,
-        blank=True
+        default=True,
     )
     disk_encryption_status = models.CharField(
         verbose_name='disk_encryption_status',
