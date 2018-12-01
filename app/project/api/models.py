@@ -308,6 +308,10 @@ class InstalledApp(models.Model):
 
 
 class SecurityStandard(models.Model):
+
+    class Meta:
+        ordering = ['-date_created']
+
     date_created = models.DateTimeField(
         verbose_name='date_created',
         auto_now_add=True,
