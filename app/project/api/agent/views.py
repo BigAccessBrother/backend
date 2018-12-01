@@ -26,16 +26,8 @@ class AgentDeleteView(DestroyAPIView):
 
 class AgentActivateView(UpdateAPIView):
     permission_classes = (IsAdmin, IsAuthenticated)
+    queryset = Agent.objects.all()
     serializer_class = AgentSerializer
-
-    def get_queryset(self):
-        return Agent.objects.filter(id=self.kwargs['pk'])
-
-    def partial_update(self, request, *args, **kwargs):
-        serializer = AgentSerializer(data=request.data, partial=True)
-        if serializer.is_valid(raise_exception=True):
-            agent = serializer.save(**serializer.validated_data)
-            return Response(AgentSerializer(agent).data)
 
 
 class AgentRegisterView(APIView):
