@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import status
 
-from project.api.models import Agent, SecurityStandard
+from project.api.models import SecurityStandard
 from project.api.tests.master_tests import MasterTestWrapper
 
 User = get_user_model()
