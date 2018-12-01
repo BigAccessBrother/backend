@@ -8,7 +8,7 @@ from project.api.models import Alert
 
 
 class Command(BaseCommand):
-    help = 'Send Mails'
+    help = 'This command sends one mail that includes the current alerts'
 
     def handle(self, *args, **options):
         while True:
