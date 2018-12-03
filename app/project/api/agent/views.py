@@ -66,6 +66,9 @@ class AgentRegisterView(APIView):
 
 class AgenInstallerDownloadView(GenericAPIView):
     # download agent installer
+    permission_classes = (IsAuthenticated)
+    queryset = AgentInstaller.objects.all()
+    serializer_class = AgentSerializer
 
     def get(self, request, **kwargs):
         # get latest installer
