@@ -71,6 +71,10 @@ class Agent(models.Model):
 
 
 class AgentInstaller(models.Model):
+
+    class Meta:
+        ordering = ['-date_created']
+
     os_type = models.CharField(
         verbose_name='os_type',
         max_length=25,
@@ -79,8 +83,9 @@ class AgentInstaller(models.Model):
         verbose_name='version',
         max_length=25,
     )
-    file = models.TextField(
+    file = models.FileField(
         verbose_name='file',
+        upload_to='uploads/',
     )
     date_created = models.DateTimeField(
         verbose_name='date_created',
