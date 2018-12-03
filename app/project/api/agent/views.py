@@ -66,7 +66,7 @@ class AgentRegisterView(APIView):
 
 class AgenInstallerDownloadView(GenericAPIView):
     # download agent installer
-    permission_classes = (IsAuthenticated)
+    permission_classes = (IsAuthenticated, )
     queryset = AgentInstaller.objects.all()
     serializer_class = AgentSerializer
 
@@ -82,7 +82,7 @@ class AgenInstallerDownloadView(GenericAPIView):
         return response
 
     def post(self, request, **kwargs):
-        # get latest installer for specified os_type (for future use)
+        # get latest installer for specified os_type
         installer = AgentInstaller.objects.filter(
             os_type__icontains=request.data.get('os_type')
         )[0]
