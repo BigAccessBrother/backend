@@ -18,8 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
-class DisplayUserSerializer(
-    serializers.ModelSerializer):  # not sending password
+class DisplayUserSerializer(serializers.ModelSerializer):  # not sending password
     class Meta:
         model = User
         fields = ['id', 'username', 'email',
