@@ -19,17 +19,27 @@ fields_to_check = {
         "quick_scan_age",
     ],
     "dates": [
-        # coming in as "21-Nov-18 12"
+        # used to come in as "21-Nov-18 ..."
+        # recently comes in as "12/3/2018 ..."
         "antispyware_signature_last_updated",
         "antivirus_signature_last_updated",
         "nis_signature_last_updated",
     ],
 }
 
+time_formats = ['%m/%d/%Y', '%d-%b-%y', '%d.%b.%y',
+                '%d/%b/%y', '%m-%d-%Y', '%m.%d.%Y']
+
 
 # turn date strings into usable datetime
 def get_time(string):
-    return datetime.strptime(string[:9], '%d-%b-%y')
+    print(string.split(' ')[0])
+    for fmt in time_formats:
+        try:
+            return datetime.strptime(string.split(' ')[0], fmt)
+        except ValueError:
+            pass
+    raise ValueError('no matching datetime format')
 
 
 # compare provided agent_response to security standard
