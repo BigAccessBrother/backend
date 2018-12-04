@@ -23,11 +23,9 @@ class ResponseSerializer(serializers.ModelSerializer):
     startup_apps = serializers.SerializerMethodField(read_only=True)
     installed_apps = serializers.SerializerMethodField(read_only=True)
 
-
     def get_startup_apps(self, obj):
         apps = obj.startup_apps.all()
         return [StartupAppSerializer(app).data for app in apps]
-
 
     def get_installed_apps(self, obj):
         apps = obj.installed_apps.all()
