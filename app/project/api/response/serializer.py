@@ -20,16 +20,16 @@ class InstalledAppSerializer(serializers.ModelSerializer):
 
 class ResponseSerializer(serializers.ModelSerializer):
     report = serializers.SerializerMethodField(read_only=True)
-    startup_apps = serializers.SerializerMethodField(read_only=True)
-    installed_apps = serializers.SerializerMethodField(read_only=True)
-
-    def get_startup_apps(self, obj):
-        apps = obj.startup_apps.all()
-        return [StartupAppSerializer(app).data for app in apps]
-
-    def get_installed_apps(self, obj):
-        apps = obj.installed_apps.all()
-        return [InstalledAppSerializer(app).data for app in apps]
+    # startup_apps = serializers.SerializerMethodField(read_only=True)
+    # installed_apps = serializers.SerializerMethodField(read_only=True)
+    #
+    # def get_startup_apps(self, obj):
+    #     apps = obj.startup_apps.all()
+    #     return [StartupAppSerializer(app).data for app in apps]
+    #
+    # def get_installed_apps(self, obj):
+    #     apps = obj.installed_apps.all()
+    #     return [InstalledAppSerializer(app).data for app in apps]
 
     def get_report(self, obj):
         return compare_fn(obj, create=False)
@@ -41,8 +41,8 @@ class ResponseSerializer(serializers.ModelSerializer):
                   'antispyware_enabled', 'antispyware_signature_last_updated', 'antivirus_enabled',
                   'antivirus_signature_last_updated', 'behavior_monitor_enabled', 'full_scan_age', 'quick_scan_age',
                   'nis_enabled', 'nis_signature_last_updated', 'nis_signature_version', 'on_access_protection_enabled',
-                  'real_time_protection_enabled', 'disk_encryption_status', 'report', 'startup_apps', 'installed_apps']
-        read_only_fields = ['id', 'date_created', 'report', 'startup_apps', 'installed_apps']
+                  'real_time_protection_enabled', 'disk_encryption_status', 'report']
+        read_only_fields = ['id', 'date_created', 'report']
 
     def create(self, validated_data):
         # create the AgentResponse entry
