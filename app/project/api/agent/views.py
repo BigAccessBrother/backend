@@ -35,25 +35,33 @@ class AgentActivateView(UpdateAPIView):
 class AgentRegisterView(APIView):
 
     def post(self, request, **kwargs):
+
+        # check if machina already has a registered agent
+        if len(Agent.objects.filter(system_serial_number=request.data['system_serial_number'])):
+            raise ValueError('machine already has a registered agent')
+
         # check if user exists
         try:
             user = User.objects.get(email=request.data['email'])
         except User.DoesNotExist:
             raise NotFound('user does not exist')
+
+        # check password
         try:
             user.check_password(request.data['password'])
         except Exception:
             raise NotFound(f'Password wrong')
-        # if pw correct, agent registered on user is created
+
+        # create agent
         agent = Agent.objects.create(
             user=user,
             system_serial_number=request.data['system_serial_number'],
             computer_name=name_agent(user.email, user.agents.count()),
         )
-        self.send_agent_register_email(agent)
+        self.send_agent_registration_email(agent)
         return Response(AgentSerializer(agent).data)
 
-    def send_agent_register_email(self, agent):
+    def send_agent_registration_email(self, agent):
         admins = User.objects.filter(is_staff=True)
         message = EmailMessage(
             subject='Agent Registration',
