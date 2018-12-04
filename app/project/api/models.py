@@ -146,7 +146,7 @@ class AgentResponse(models.Model):
     agent = models.ForeignKey(
         verbose_name='agent',
         to='Agent',
-        related_name='agent',
+        related_name='responses',
         on_delete=models.CASCADE,
         null=True,
         blank=True
@@ -270,6 +270,7 @@ class StartupApp(models.Model):
     agent_response = models.ForeignKey(
         verbose_name='agent_response',
         to='api.AgentResponse',
+        related_name='startup_apps',
         on_delete=models.CASCADE,
     )
 
@@ -305,6 +306,7 @@ class InstalledApp(models.Model):
     agent_response = models.ForeignKey(
         verbose_name='agent_response',
         to='api.AgentResponse',
+        related_name='installed_apps',
         on_delete=models.CASCADE,
     )
 
