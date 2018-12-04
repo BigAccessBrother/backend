@@ -12,7 +12,7 @@ class AgentSerializer(serializers.ModelSerializer):
 
     def get_latest_response(self, agent):
         try:
-            latest_response = AgentResponse.objects.filter(agent=agent).order_by("-date_created")[0]
+            latest_response = AgentResponse.objects.filter(agent_id=agent.id).order_by("-date_created")[0]
             return ResponseSerializer(latest_response).data
         except Exception:
             return 'no responses from this agent'
