@@ -3,6 +3,7 @@ from rest_framework import serializers
 
 
 class UserSerializer(serializers.ModelSerializer):
+    """for creating / updating"""
     class Meta:
         model = User
         fields = ['id', 'email', 'password', 'is_staff', 'is_active']
@@ -19,7 +20,8 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
-class DisplayUserSerializer(serializers.ModelSerializer):  # not sending password
+class DisplayUserSerializer(serializers.ModelSerializer):
+    """for responses"""
     class Meta:
         model = User
         fields = ['id', 'username', 'email',
