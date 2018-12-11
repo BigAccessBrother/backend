@@ -1,3 +1,4 @@
+import datetime
 from django.contrib.auth import get_user_model
 from rest_framework import status
 
@@ -15,11 +16,8 @@ class ListStandardsTest(MasterTestWrapper.MasterTests):
         super().setUp()
         for i in range(3):
             SecurityStandard.objects.create(
-                    id={i},
-                    system_serial_number="5GH8LH2",
-                    agent_version="0.1.0",
                     os_type="Microsoft Windows 10 Home",
-                    os_version="10.0.17134 N/A Build 17134",
+                    os_version=f'{i}',
                     system_manufacturer="Dell Inc.",
                     system_model="Inspiron 7577",
                     system_type="x64-based PC",
@@ -57,7 +55,7 @@ class ListStandardsTest(MasterTestWrapper.MasterTests):
         self.authorize()
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data[0].get('id'), '2')
+        self.assertEqual(response.data[0].get('os_version'), '2')
 
 
 class AddStandardsTest(MasterTestWrapper.MasterTests):
@@ -82,7 +80,7 @@ class AddStandardsTest(MasterTestWrapper.MasterTests):
         response = self.client.post(url, {
           "system_serial_number": "5GH8LH2",
           "agent_version": "0.1.0",
-          "os_type": "Microsoft Windows 10 Home",
+          "os_type": "Microsoft Windows 10 Latest",
           "os_version": "10.0.17134 N/A Build 17134",
           "system_manufacturer": "Dell Inc.",
           "system_model": "Inspiron 7577",
@@ -102,8 +100,8 @@ class AddStandardsTest(MasterTestWrapper.MasterTests):
           "real_time_protection_enabled": True,
           "disk_encryption_status": "Protection Off"
           }, format='json')
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(SecurityStandard.objects.count(), 1)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(SecurityStandard.objects.count(), 2)
         self.assertEqual(SecurityStandard.objects.first().on_access_protection_enabled, True)
-        self.assertEqual(SecurityStandard.objects.first().os_type, '"Microsoft Windows 10 Home"')
-        # Test date_created
+        self.assertEqual(SecurityStandard.objects.first().os_type, 'Microsoft Windows 10 Latest')
+        self.assertTrue(isinstance(SecurityStandard.objects.first().date_created, datetime.datetime))
