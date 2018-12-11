@@ -62,6 +62,10 @@ class AddStandardsTest(MasterTestWrapper.MasterTests):
     endpoint = 'new_standards'
     methods = ['POST']
 
+    def setUp(self):
+        super().setUp()
+        SecurityStandard.objects.create()
+
     def test_method_not_allowed(self):
         url = self.get_url()
         self.authorize()
@@ -76,7 +80,6 @@ class AddStandardsTest(MasterTestWrapper.MasterTests):
     def test_add_standards(self):
         url = self.get_url()
         self.authorize()
-        SecurityStandard.objects.create()
         response = self.client.post(url, {
           "system_serial_number": "5GH8LH2",
           "agent_version": "0.1.0",
