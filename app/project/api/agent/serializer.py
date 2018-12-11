@@ -21,4 +21,4 @@ class AgentSerializer(serializers.ModelSerializer):
         model = Agent
         fields = ['id', 'user', 'computer_name', 'last_response_received', 'secure', 'date_created',
                   'system_serial_number', 'is_active', 'latest_response']
-        read_only_fields = ['id', 'user', 'date_created', 'latest_response']
+        read_only_fields = ['id', 'user', 'date_created', 'last_response_received', 'latest_response']
