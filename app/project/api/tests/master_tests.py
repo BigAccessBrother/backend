@@ -23,7 +23,7 @@ class MasterTestWrapper:
 
         def authorize(self, user=None):
             if not user:
-                user = self.user
+                user = self.admin_user
             self.refresh = RefreshToken.for_user(user)
             self.access_token = self.refresh.access_token
             self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.access_token}')
