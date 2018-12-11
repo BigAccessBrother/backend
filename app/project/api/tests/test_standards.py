@@ -103,7 +103,7 @@ class AddStandardsTest(MasterTestWrapper.MasterTests):
           "real_time_protection_enabled": True,
           "disk_encryption_status": "Protection Off"
           }, format='json')
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(SecurityStandard.objects.count(), 2)
         self.assertEqual(SecurityStandard.objects.first().on_access_protection_enabled, True)
         self.assertEqual(SecurityStandard.objects.first().os_type, 'Microsoft Windows 10 Latest')

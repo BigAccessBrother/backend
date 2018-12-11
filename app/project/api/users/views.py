@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
-from rest_framework.generics import ListAPIView, DestroyAPIView, UpdateAPIView, GenericAPIView
+from rest_framework.generics import ListAPIView, DestroyAPIView, UpdateAPIView, \
+    GenericAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -7,18 +8,16 @@ from project.api.permissions import IsAdmin
 from project.api.users.serializer import UserSerializer, DisplayUserSerializer
 
 
-class UserListView(ListAPIView):
+class UserListCreateView(ListCreateAPIView):
+    """List / create users"""
+    permission_classes = (IsAdmin, IsAuthenticated)
     queryset = User.objects.all()
     serializer_class = DisplayUserSerializer
 
-    def post(self, request, **kwargs):
-        serializer = UserSerializer(data=request.data, context={'request': request})
-        if serializer.is_valid(raise_exception=True):
-            new_user = serializer.save(**serializer.validated_data)
-            return Response(DisplayUserSerializer(new_user).data)
-
 
 class ActiveUserView(GenericAPIView):
+    """Return profile of logged in user"""
+    permission_classes = (IsAuthenticated, )
     queryset = User.objects.all()
     serializer_class = DisplayUserSerializer
 
@@ -26,21 +25,7 @@ class ActiveUserView(GenericAPIView):
         return Response(DisplayUserSerializer(self.request.user).data)
 
 
-class UserDeleteView(DestroyAPIView):
+class UserUpdateDeleteView(RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAdmin, IsAuthenticated)
     queryset = User.objects.all()
     serializer_class = UserSerializer
-
-
-class UserUpdateView(UpdateAPIView):
-    permission_classes = (IsAdmin, IsAuthenticated)
-    serializer_class = UserSerializer
-
-    def get_queryset(self):
-        return User.objects.filter(id=self.kwargs['pk'])
-
-    def partial_update(self, request, *args, **kwargs):
-        serializer = UserSerializer(data=request.data, partial=True)
-        if serializer.is_valid(raise_exception=True):
-            user = serializer.save(**serializer.validated_data)
-            return Response(DisplayUserSerializer(user).data)
