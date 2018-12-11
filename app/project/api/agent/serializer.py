@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from project.api.models import Agent, AgentResponse
 from project.api.response.serializer import ResponseSerializer
-from project.api.user.serializer import DisplayUserSerializer
+from project.api.users.serializer import DisplayUserSerializer
 
 
 class AgentSerializer(serializers.ModelSerializer):

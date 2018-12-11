@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from project.api.permissions import IsAdmin
-from project.api.user.serializer import UserSerializer, DisplayUserSerializer
+from project.api.users.serializer import UserSerializer, DisplayUserSerializer
 
 
 class UserListView(ListAPIView):
