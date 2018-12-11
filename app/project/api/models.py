@@ -26,10 +26,8 @@ def save_user_profile(sender, instance, **kwargs):
 
 class Agent(models.Model):
 
-    # owner = models.ForeignKey('auth.user', related_name='auth_user', on_delete=models.CASCADE,)
-
     class Meta:
-        ordering = ['secure', '-last_response_received']
+        ordering = ['secure', '-is_active', '-last_response_received']
 
     user = models.ForeignKey(
         verbose_name='user',
@@ -371,8 +369,7 @@ class SecurityStandard(models.Model):
     antispyware_signature_last_updated = models.CharField(
         verbose_name='antispyware_signature_last_updated',
         max_length=50,
-        null=True,
-        blank=True
+        default=0,
     )
     antivirus_enabled = models.BooleanField(
         verbose_name='antivirus_enabled',
@@ -381,8 +378,7 @@ class SecurityStandard(models.Model):
     antivirus_signature_last_updated = models.CharField(
         verbose_name='antivirus_signature_last_updated',
         max_length=50,
-        null=True,
-        blank=True
+        default=0,
     )
     behavior_monitor_enabled = models.BooleanField(
         verbose_name='behavior_monitor_enabled',
@@ -391,14 +387,12 @@ class SecurityStandard(models.Model):
     full_scan_age = models.TextField(
         verbose_name='full_scan_age',
         max_length=50,
-        null=True,
-        blank=True
+        default=0,
     )
     quick_scan_age = models.TextField(
         verbose_name='quick_scan_age',
         max_length=50,
-        null=True,
-        blank=True
+        default=0,
     )
     nis_enabled = models.BooleanField(
         verbose_name='nis_enabled',
@@ -407,8 +401,7 @@ class SecurityStandard(models.Model):
     nis_signature_last_updated = models.CharField(
         verbose_name='nis_signature_last_updated',
         max_length=50,
-        null=True,
-        blank=True
+        default=0,
     )
     nis_signature_version = models.CharField(
         verbose_name='nis_signature_version',
