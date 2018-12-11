@@ -12,7 +12,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         while True:
-            time.sleep(30)
+            time.sleep(43200)  # 12h
             admins = User.objects.filter(is_staff=True)
             alerts_to_send = Alert.objects.filter(sent=False)
             if len(alerts_to_send) > 0:
