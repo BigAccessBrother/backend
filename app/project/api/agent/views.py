@@ -5,8 +5,6 @@ from rest_framework.generics import ListAPIView, DestroyAPIView, UpdateAPIView, 
     GenericAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.views import APIView
-
 from project.api.agent.agent_helper import name_agent, \
     send_agent_registration_email
 from project.api.agent.serializer import AgentSerializer
