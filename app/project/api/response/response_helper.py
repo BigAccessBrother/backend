@@ -33,7 +33,6 @@ time_formats = ['%m/%d/%Y', '%d-%b-%y', '%d.%b.%y',
 
 # turn date strings into usable datetime
 def get_time(string):
-    print(string.split(' ')[0])
     for fmt in time_formats:
         try:
             return datetime.strptime(string.split(' ')[0], fmt)
@@ -43,7 +42,7 @@ def get_time(string):
 
 
 # compare provided agent_response to security standard
-def compare_fn(agent_response, create=True):
+def compare_fn(agent_response, initial=True):
     secure = True
     report = {}
     now = datetime.now()
@@ -77,7 +76,7 @@ def compare_fn(agent_response, create=True):
     # add report summary
     report["status"] = "ok" if secure else "DANGER"
 
-    if create:
+    if initial:
         # update agent entry
         agent = agent_response.agent
         agent.secure = secure
@@ -87,5 +86,4 @@ def compare_fn(agent_response, create=True):
         if not secure:
             create_alert(report, agent)
 
-    # return status report
     return report
