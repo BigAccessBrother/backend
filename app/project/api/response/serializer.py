@@ -20,6 +20,9 @@ class InstalledAppSerializer(serializers.ModelSerializer):
 
 class ResponseSerializer(serializers.ModelSerializer):
     report = serializers.SerializerMethodField(read_only=True)
+
+    # needs to be reworked depending on necessity of the company
+    #
     # startup_apps = serializers.SerializerMethodField(read_only=True)
     # installed_apps = serializers.SerializerMethodField(read_only=True)
     #
@@ -32,7 +35,7 @@ class ResponseSerializer(serializers.ModelSerializer):
     #     return [InstalledAppSerializer(app).data for app in apps]
 
     def get_report(self, obj):
-        return compare_fn(obj, create=False)
+        return compare_fn(obj, initial=False)
 
     class Meta:
         model = AgentResponse
@@ -42,7 +45,7 @@ class ResponseSerializer(serializers.ModelSerializer):
                   'antivirus_signature_last_updated', 'behavior_monitor_enabled', 'full_scan_age', 'quick_scan_age',
                   'nis_enabled', 'nis_signature_last_updated', 'nis_signature_version', 'on_access_protection_enabled',
                   'real_time_protection_enabled', 'disk_encryption_status', 'report']
-        read_only_fields = ['id', 'date_created', 'report']
+        read_only_fields = ['id', 'date_created', 'report', 'agent', 'ip_address']
 
     def create(self, validated_data):
         # create the AgentResponse entry
