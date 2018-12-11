@@ -3,7 +3,7 @@ stages:
 - build
 - push
 - lint
-#- test
+- test
 - cleanup
 - deploy
 
@@ -28,14 +28,14 @@ lint:
   script:
   - export CI_PIPELINE_ID=$CI_PIPELINE_ID
   - export CI_BUILD_REF_NAME=$CI_COMMIT_REF_NAME
-  - docker-compose -p "$CI_PIPELINE_ID" -f docker-compose.ci.yml run app flake8 . #.ci file must be created
+  - docker-compose -p "$CI_PIPELINE_ID" -f docker-compose.ci.yml run app flake8 .
 
-#test:
-#  stage: test
-#  script:
-#  - export CI_PIPELINE_ID=$CI_PIPELINE_ID
-#  - export CI_BUILD_REF_NAME=$CI_COMMIT_REF_NAME
-#  - docker-compose -p "$CI_PIPELINE_ID" -f docker-compose.ci.yml run project python manage.py test .
+test:
+  stage: test
+  script:
+  - export CI_PIPELINE_ID=$CI_PIPELINE_ID
+  - export CI_BUILD_REF_NAME=$CI_COMMIT_REF_NAME
+  - docker-compose -p "$CI_PIPELINE_ID" -f docker-compose.ci.yml run project python manage.py test .
 
 push image:
   stage: push
@@ -46,7 +46,7 @@ push image:
   - docker tag "$CI_PIPELINE_ID":"$CI_COMMIT_REF_NAME" "$CI_REGISTRY_IMAGE":"$CI_COMMIT_REF_NAME"
   - docker push "$CI_REGISTRY_IMAGE":"$CI_COMMIT_REF_NAME"
 
-push latest: #for every commit, every branch
+push latest:
   stage: push
   script:
   - docker tag "$CI_PIPELINE_ID":"$CI_COMMIT_REF_NAME" "$CI_REGISTRY_IMAGE":latest

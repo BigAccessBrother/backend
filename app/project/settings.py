@@ -27,9 +27,7 @@ SECRET_KEY = 't8x9j$5f&u%5(9v8we^fugy+j)5xg$j!_x@#uiovx=3^wmgut#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['app',
-                 'accessbrother.propulsion-learn.ch',
-                 'localhost']
+ALLOWED_HOSTS = ['app', 'accessbrother.propulsion-learn.ch', 'localhost']
 
 
 # Application definition
@@ -43,11 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'project.api',
     'rest_framework',
-    'corsheaders',  # needed to connect from frontend
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',  # needed to connect frontend
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -57,8 +55,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-
-# open API to everyone. We might want to change this for production
 CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'project.urls'
@@ -81,17 +77,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'project.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -102,10 +87,6 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -123,12 +104,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=300),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
-
-# Internationalization
-# https://docs.djangoproject.com/en/2.1/topics/i18n/
 
 STATIC_URL = '/static-files/'
 STATIC_ROOT = '/static-files'
@@ -145,10 +123,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587

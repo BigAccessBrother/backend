@@ -5,6 +5,7 @@ from django.dispatch import receiver
 
 
 class UserProfile(models.Model):
+    # not in use yet
     user = models.OneToOneField(
         verbose_name='user',
         to=settings.AUTH_USER_MODEL,
@@ -129,7 +130,7 @@ class Alert(models.Model):
     )
 
     def __str__(self):
-        return f"{self.target_machine} | alert sent: {self.sent}"
+        return f"{self.subject} | alert sent: {self.sent}"
 
 
 class AgentResponse(models.Model):
@@ -237,7 +238,7 @@ class AgentResponse(models.Model):
     )
 
     def __str__(self):
-        return f"{self.date_created} | ip: {self.ip_address}"
+        return f"{self.agent} | ip: {self.date_created}"
 
 
 class StartupApp(models.Model):
@@ -326,7 +327,7 @@ class SecurityStandard(models.Model):
         null=True,
         blank=True
     )
-    os_type = models.CharField(  # should contain an array?
+    os_type = models.CharField(
         verbose_name='os_type',
         max_length=50,
         null=True,
@@ -425,4 +426,4 @@ class SecurityStandard(models.Model):
     )
 
     def __str__(self):
-        return f"security standards id: {self.id} | date created: {self.date_created}"
+        return f"os type: {self.os_type} | date created: {self.date_created}"
